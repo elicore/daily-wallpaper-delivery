@@ -1,5 +1,6 @@
 import typer
 import requests
+import sys
 
 
 # {
@@ -37,7 +38,7 @@ RESOLUTIONS = ["1366x768.jpg", "1920x1080.jpg", "UHD.jpg"]
 
 def daily_wallpaper_details(market: str, index: int=0) ->  dict:
     r = requests.get(
-        url=BING_WP_URL.format(),
+        url=BING_WP_URL.format(market=market, index=index),
         headers={
             "Referer": BING_URL_BASE,
             "User-Agent": 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/8.0; .NET4.0C; .NET4.0E)'
@@ -64,6 +65,9 @@ def main(bot_token: str, chat_id: str):
     url = build_wallpaper_url(url_base)
     print(url)
 
+    bot_send_photo(url, bot_token, chat_id)
+
 
 if __name__ == '__main__':
-    typer.run(main)
+    # typer.run(main)
+    main(sys.argv[1], sys.argv[2])
