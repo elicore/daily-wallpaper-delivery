@@ -61,8 +61,10 @@ def _wallpaper_details(locale: str='en-US'):
         for i in j['batchrsp']['items']
         ]
     
-    details = [
-        {
+    details = list()
+    for i in items:
+        # horizontal image
+        details.append({
             'image_url': i['image_fullscreen_001_landscape']['u'],
             'image_title': i['hs2_title_text']['tx'],
             'image_description': i['hs2_hover_text']['tx'] if 'hs2_hover_text' in i else '',
@@ -71,9 +73,19 @@ def _wallpaper_details(locale: str='en-US'):
             'item_title': i['title_text']['tx'],
             'item_copyright_text': i['copyright_text']['tx'],
             'item_url': i['title_destination_url']['u'].lower().replace('microsoft-edge:', '')
-        }
-        for i in items
-    ]
+        })
+        
+        # portrait image
+        # details.append({
+        #     'image_url': i['image_fullscreen_001_portrait']['u'],
+        #     'image_title': i['hs2_title_text']['tx'],
+        #     'image_description': i['hs2_hover_text']['tx'] if 'hs2_hover_text' in i else '',
+        #     'cta_text': i['hs2_cta_text']['tx'],
+        #     'cta_url': i['hs2_destination_url']['u'].lower().replace('microsoft-edge:', ''),
+        #     'item_title': i['title_text']['tx'],
+        #     'item_copyright_text': i['copyright_text']['tx'],
+        #     'item_url': i['title_destination_url']['u'].lower().replace('microsoft-edge:', '')
+        # })
 
     return details
 
